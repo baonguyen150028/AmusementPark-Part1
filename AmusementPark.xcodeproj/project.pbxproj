@@ -12,6 +12,8 @@
 		7F4EE05A1DB862CE00B67335 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F4EE0581DB862CE00B67335 /* Main.storyboard */; };
 		7F4EE05C1DB862CE00B67335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F4EE05B1DB862CE00B67335 /* Assets.xcassets */; };
 		7F4EE05F1DB862CE00B67335 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F4EE05D1DB862CE00B67335 /* LaunchScreen.storyboard */; };
+		7F4EE0691DB8636E00B67335 /* AmusementPark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4EE0681DB8636E00B67335 /* AmusementPark.swift */; };
+		7F4EE06E1DB8800A00B67335 /* PersonGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4EE06D1DB8800A00B67335 /* PersonGeneration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		7F4EE05B1DB862CE00B67335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F4EE05E1DB862CE00B67335 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F4EE0601DB862CE00B67335 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F4EE0681DB8636E00B67335 /* AmusementPark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmusementPark.swift; sourceTree = "<group>"; };
+		7F4EE06D1DB8800A00B67335 /* PersonGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonGeneration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +58,40 @@
 		7F4EE0531DB862CE00B67335 /* AmusementPark */ = {
 			isa = PBXGroup;
 			children = (
+				7F4EE06A1DB8637300B67335 /* Model */,
+				7F4EE06C1DB8639200B67335 /* View */,
+				7F4EE06B1DB8638000B67335 /* Controller */,
 				7F4EE0541DB862CE00B67335 /* AppDelegate.swift */,
-				7F4EE0561DB862CE00B67335 /* ViewController.swift */,
-				7F4EE0581DB862CE00B67335 /* Main.storyboard */,
 				7F4EE05B1DB862CE00B67335 /* Assets.xcassets */,
 				7F4EE05D1DB862CE00B67335 /* LaunchScreen.storyboard */,
 				7F4EE0601DB862CE00B67335 /* Info.plist */,
 			);
 			path = AmusementPark;
+			sourceTree = "<group>";
+		};
+		7F4EE06A1DB8637300B67335 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7F4EE0681DB8636E00B67335 /* AmusementPark.swift */,
+				7F4EE06D1DB8800A00B67335 /* PersonGeneration.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		7F4EE06B1DB8638000B67335 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7F4EE0561DB862CE00B67335 /* ViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		7F4EE06C1DB8639200B67335 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7F4EE0581DB862CE00B67335 /* Main.storyboard */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +167,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F4EE06E1DB8800A00B67335 /* PersonGeneration.swift in Sources */,
 				7F4EE0571DB862CE00B67335 /* ViewController.swift in Sources */,
 				7F4EE0551DB862CE00B67335 /* AppDelegate.swift in Sources */,
+				7F4EE0691DB8636E00B67335 /* AmusementPark.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
