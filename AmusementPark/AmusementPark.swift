@@ -10,7 +10,7 @@ import Foundation
 
 // PROTOCOLS
 
-protocol AreaAccess {
+protocol AreaAccess{
     func accessToArea() -> AreaAccessType
 }
 protocol RideAccess {
@@ -19,6 +19,9 @@ protocol RideAccess {
 protocol DiscountAccess {
     func accessToDiscount() -> DiscountAccessType
 }
+
+
+
 protocol EntrantType: AreaAccess, RideAccess, DiscountAccess {
 
 

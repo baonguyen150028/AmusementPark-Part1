@@ -8,11 +8,15 @@
 
 import Foundation
 
-enum ErrorInformation: Error{
-    case MissingDateOfBirth, MissingFirstName, MissingLastName, MissingAddress, MissingCity, MissingState, MissingZipCode, MissingSocicalSecurityNumber,MissingManagementTier
+// ERROR TYPE
 
+enum ErrorInformation: Error {
+    case MissingDateOfBirth, MissingFirstName, MissingLastName,
+        MissingAddress, MissingCity, MissingState, MissingZipCode,
+        MissingSocicalSecurityNumber,MissingManagementTier
 }
-class PersonGeneration {
+
+class PassGeneration {
 
     var entrant: Information
     var entrantType: EntrantType
@@ -21,7 +25,7 @@ class PersonGeneration {
         self.entrant = entrant
         self.entrantType = entrantType
     }
-
+    // CHECKING: Required informations
     func verifyingFilledInformation() throws -> Bool{
         switch self.entrantType {
             case GuestType.FreeChild:
@@ -57,5 +61,38 @@ class PersonGeneration {
         print(self.entrantType)
     }
 
+    // AREA TYPE & DISCOUNT TYPE
+    enum AreaType {
+        case Asumement
+        case RideControl
+        case Maintenance
+        case Kitchen
+        case Rides
+        case Office
+        case SkipRideLines
+    }
+    enum DiscountType {
+        case FoodDiscount
+        case MerchDiscount
+    }
+
+    //SWIPE METHOD
+    func checkAccessArea(areaType: AreaType) -> Bool {
+        switch areaType {
+            case .Asumement: return self.entrantType.accessToArea().asumementAreas
+            case .Kitchen: return self.entrantType.accessToArea().kitchenAreas
+            case .RideControl: return self.entrantType.accessToArea().rideControlAreas
+            case .Office: return self.entrantType.accessToArea().officeAreas
+            case .Maintenance: return self.entrantType.accessToArea().maintenanceAreas
+            case .Rides: return self.entrantType.accessToRide().accessAllRides
+            case .SkipRideLines: return self.entrantType.accessToRide().skipsAllRideLines
+        }
+    }
+    func checkAccessDiscount( discountType: DiscountType) -> Int? {
+        switch discountType {
+            case .FoodDiscount: return self.entrantType.accessToDiscount().discountOnFood
+            case .MerchDiscount: return self.entrantType.accessToDiscount().discountOnMerchandise
+        }
+    }
 }
 
