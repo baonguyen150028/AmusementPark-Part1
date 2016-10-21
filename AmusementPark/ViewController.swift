@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-     let person = Information(firstName: "a", lastName: "b", streetAddress: "c", city: "d", state: "e", zipCode: 23, socialSecurityNumber: 45, dateOfBirth: nil, ManagementTier: "CEO")
+     let person = Information(firstName: "a", lastName: "b", streetAddress: "c", city: "d", state: "e", zipCode: 23, socialSecurityNumber: 45, dateOfBirth: "10/20/1997", ManagementTier: "CEO")
      let pass = PassGeneration(entrant: person, entrantType: HourlyEmployeeType.FoodServices)
         pass.printEntrant()
     }

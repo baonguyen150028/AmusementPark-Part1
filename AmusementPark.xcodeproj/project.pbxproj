@@ -12,7 +12,7 @@
 		7F4EE05A1DB862CE00B67335 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F4EE0581DB862CE00B67335 /* Main.storyboard */; };
 		7F4EE05C1DB862CE00B67335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F4EE05B1DB862CE00B67335 /* Assets.xcassets */; };
 		7F4EE05F1DB862CE00B67335 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F4EE05D1DB862CE00B67335 /* LaunchScreen.storyboard */; };
-		7F4EE0691DB8636E00B67335 /* AmusementPark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4EE0681DB8636E00B67335 /* AmusementPark.swift */; };
+		7F4EE0691DB8636E00B67335 /* EntrantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4EE0681DB8636E00B67335 /* EntrantModel.swift */; };
 		7F4EE06E1DB8800A00B67335 /* PassGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4EE06D1DB8800A00B67335 /* PassGeneration.swift */; };
 /* End PBXBuildFile section */
 
@@ -24,7 +24,7 @@
 		7F4EE05B1DB862CE00B67335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F4EE05E1DB862CE00B67335 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F4EE0601DB862CE00B67335 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7F4EE0681DB8636E00B67335 /* AmusementPark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmusementPark.swift; sourceTree = "<group>"; };
+		7F4EE0681DB8636E00B67335 /* EntrantModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntrantModel.swift; sourceTree = "<group>"; };
 		7F4EE06D1DB8800A00B67335 /* PassGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassGeneration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,7 +72,7 @@
 		7F4EE06A1DB8637300B67335 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7F4EE0681DB8636E00B67335 /* AmusementPark.swift */,
+				7F4EE0681DB8636E00B67335 /* EntrantModel.swift */,
 				7F4EE06D1DB8800A00B67335 /* PassGeneration.swift */,
 			);
 			name = Model;
@@ -170,7 +170,7 @@
 				7F4EE06E1DB8800A00B67335 /* PassGeneration.swift in Sources */,
 				7F4EE0571DB862CE00B67335 /* ViewController.swift in Sources */,
 				7F4EE0551DB862CE00B67335 /* AppDelegate.swift in Sources */,
-				7F4EE0691DB8636E00B67335 /* AmusementPark.swift in Sources */,
+				7F4EE0691DB8636E00B67335 /* EntrantModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
