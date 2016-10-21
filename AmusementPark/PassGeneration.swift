@@ -6,113 +6,146 @@
 //  Copyright © 2016 The Bao. All rights reserved.
 //
 
-import Foundation
-
-// ERROR TYPE
-
-enum ErrorInformation: Error {
-    case MissingDateOfBirth, MissingFirstName, MissingLastName,
-        MissingAddress, MissingCity, MissingState, MissingZipCode,
-        MissingSocicalSecurityNumber,MissingManagementTier
-}
+import AudioToolbox
 
 class PassGeneration {
 
-//    var entrant: Information
-//    var entrantType: EntrantType
-//
-//    init(entrant: Information, entrantType: EntrantType) {
-//        self.entrant = entrant
-//        self.entrantType = entrantType
-//    }
-    // CHECKING: Required informations
-//    func verifyingFilledInformation() throws -> Bool{
-//        switch self.entrantType {
-//            case GuestType.FreeChild:
-//                guard self.entrant.dateOfBirth != nil else {
-//                    throw ErrorInformation.MissingDateOfBirth
-//            }
-//            case is HourlyEmployeeType:
-//                guard self.entrant.firstName != nil else {
-//                    throw ErrorInformation.MissingFirstName
-//                }
-//                guard self.entrant.lastName != nil else {
-//                    throw ErrorInformation.MissingLastName
-//                }
-//                guard self.entrant.streetAddress != nil else {
-//                    throw ErrorInformation.MissingAddress
-//                }
-//                guard self.entrant.state != nil else {
-//                    throw ErrorInformation.MissingAddress
-//                }
-//                guard self.entrant.city != nil else {
-//                    throw ErrorInformation.MissingCity
-//                }
-//                guard self.entrant.zipCode != nil else {
-//                    throw ErrorInformation.MissingZipCode
-//                }
-//            default: print("Do not require information.")
-//        }
-//        return true
-//    }
-//
-    func printEntrant() {
-        print(self.entrant)
-        print(self.entrantType)
+    enum EntrantInfoKind {
+        case Classic
+        case Vip
+        case FreeChild(String)
+        case FoodServices(Name, Address, String?, Int?)
+        case Maintenance(Name, Address, String?, Int?)
+        case RideServices(Name, Address, String?, Int?)
+        case Manager(Name, Address, String?, Int?, String?)
     }
-
-
+    
+    static func generate(kind: EntrantInfoKind) -> EntrantType {
+        do {
+        switch kind {
+        case .Classic:
+            return ClassicGuest()
+        case .Vip:
+            return VipGuest()
+        case .FreeChild(let dateOfBirth):
+            return try FreeChildGuest(dateOfBirth: dateOfBirth)
+        case .FoodServices(let name, let address, let dateOfBirth, let socialSecurityNumber):
+            return try FoodServicesEmployee(name: name, address: address, dateOfBirth: dateOfBirth, socialSecurityNumber: socialSecurityNumber)
+        case .Maintenance(let name, let address, let dateOfBirth, let socialSecurityNumber):
+            return try MaintenanceEmployee(name: name, address: address, dateOfBirth: dateOfBirth, socialSecurityNumber: socialSecurityNumber)
+        case .RideServices(let name, let address, let dateOfBirth, let socialSecurityNumber):
+            return try RideServicesEmployee(name: name, address: address, dateOfBirth: dateOfBirth, socialSecurityNumber: socialSecurityNumber)
+        case .Manager(let name, let address, let dateOfBirth, let socialSecurityNumber, let managementTier):
+            return try ManagerEmployee(name: name, address: address, dateOfBirth: dateOfBirth, socialSecurityNumber: socialSecurityNumber, managementTier: managementTier)
+        }
+        }catch let error {
+            fatalError("\(error)")
+        }
+    }
 }
 
-class Reader {
+class Swiper {
     // AREA TYPE & DISCOUNT TYPE
-    enum AreaType {
-        case Asumement
-        case RideControl
-        case Maintenance
-        case Kitchen
-        case Rides
-        case Office
-        case SkipRideLines
+    enum Permission {
+        /// An accessbile Area
+        case Amusement, Kitchen, RideControl, Maintenance, Office
+
+        /// A Ride's privilege
+        case AllRides, SkipRideLines
+
+        /// A Discount privilege
+        case FoodDiscount, MerchanDiscount
+
     }
-    enum DiscountType {
-        case FoodDiscount
-        case MerchDiscount
+    enum Access {
+
+        /// The access is granted
+        case granted
+        /// The access is denied
+        case denied
+
+        /// The name of the sound to play
+        var filename: String {
+            switch ( self ) {
+            case .granted: return "AccessGranted"
+            case .denied: return "AccessDenied"
+            }
+        }
+
+        ///The url of the file to play
+        var fileUrl: URL {
+            let path = Bundle.main.path(forResource: self.filename, ofType: "wav")!
+            return  URL(fileURLWithPath: path) as URL
+        }
     }
+
+    static var sound: SystemSoundID = 0
 
     //SWIPE METHOD
-    func check() {
-        // Check BirthDay
-//        if compareDate(){
-//            print("Happy Birthday!!! Today is your birthday.")
-//        }
+    static func check(entrant: EntrantType, access: Permission) -> Bool {
+
+        var accessGranted: Bool = false
+
+        switch access {
+        // Area Access
+        case .Amusement:
+            accessGranted = entrant is AsumementAccessible
+        case .Kitchen:
+            accessGranted = entrant is KitchenAccessible
+        case .RideControl:
+            accessGranted = entrant is RideControlAccessible
+        case .Maintenance:
+            accessGranted = entrant is MaintenanceAccessible
+        case .Office:
+            accessGranted = entrant is OfficeAccessible
+        // Ride Access
+        case .AllRides:
+            accessGranted = entrant is AllRidesAccessible
+        case .SkipRideLines:
+            accessGranted = entrant is SkipAllRideLinesAccessible
+        // Discount Access
+        case .FoodDiscount:
+            accessGranted = entrant is FoodDiscountAccessible
+        case .MerchanDiscount:
+            accessGranted = entrant is MerchanDiscountAccesible
+        }
+
+        if accessGranted {
+            print("Access to \(access) is granted")
+            playSound(Access.granted.fileUrl)
+        } else {
+            print("Access to \(access) is denied")
+            playSound(Access.denied.fileUrl)
+        }
+
+        return accessGranted
 
     }
+    static func checkSwipeForRide(entrant: EntrantType) -> Bool {
+        //Check the privilege
+        guard Swiper.check(entrant: entrant, access: .AllRides) else {
+            return false
+        }
+        return true
+    }
+    static func checkSwipeForFoodDiscount(entrant: EntrantType) -> (Bool, Int) {
+        guard Swiper.check(entrant: entrant, access: .FoodDiscount) else {
+            return (false, 0)
+        }
+        let entrantFoodDiscount = entrant as! FoodDiscountAccessible
+        return (true, entrantFoodDiscount.foodDiscount!)
+    }
 
-//    func checkAccessArea(entrant: EntrantType, areaType: AreaType) -> Bool {
-//
-//        switch areaType {
-//        case .Asumement: return entrant.accessToArea().asumementAreas
-//        case .Kitchen: return entrant.accessToArea().kitchenAreas
-//        case .RideControl: return entrant.accessToArea().rideControlAreas
-//        case .Office: return entrant.accessToArea().officeAreas
-//        case .Maintenance: return entrant.accessToArea().maintenanceAreas
-//        case .Rides: return entrant.accessToRide().accessAllRides
-//        case .SkipRideLines: return entrant.accessToRide().skipsAllRideLines
-//        }
-//    }
-//
-//    static func checkAccessDiscount( entrant: EntrantType, discountType: DiscountType) -> Int? {
-//        switch discountType {
-//        case .FoodDiscount: return entrant.accessToDiscount().discountOnFood
-//        case .MerchDiscount: return entrant.accessToDiscount().discountOnMerchandise
-//        }
-//    }
-//    func compareDate(information: Information) -> Bool {
-//        let dateOfBirth = information.dateOfBirth?.toDateTime()
-//
-//        return (dateOfBirth?.isBirthDay())!
-//    }
-//
+    static func checkSwipeForMerchandiseDiscount(entrant: EntrantType) -> (Bool, Int) {
+        guard Swiper.check(entrant: entrant, access: .MerchanDiscount) else {
+            return (false, 0)
+        }
+        let entrantMerchandiseDiscount = entrant as! MerchanDiscountAccesible
+        return (true, entrantMerchandiseDiscount.merchanDiscount!)
+    }
 
+    static func playSound(url: URL) {
+        AudioServicesCreateSystemSoundID(url as CFURL, &sound)
+        AudioServicesPlaySystemSound(sound)
+    }
 }

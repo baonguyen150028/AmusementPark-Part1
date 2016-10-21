@@ -12,10 +12,21 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-     let person = Information(firstName: "a", lastName: "b", streetAddress: "c", city: "d", state: "e", zipCode: 23, socialSecurityNumber: 45, dateOfBirth: "10/20/1997", ManagementTier: "CEO")
-     let pass = PassGeneration(entrant: person, entrantType: HourlyEmployeeType.FoodServices)
-        pass.printEntrant()
+        
+        let nameDefault: Name
+        let addressDefault: Address
+        let dateOfBith: String? = "09/23/1997"
+        let socialSecurityNumber: Int? = 243
+        let managementTier: String? = "CEO"
+        do {
+            nameDefault = try Name(firstName: "Darth", lastName: "Vader")
+            addressDefault = try Address(streetAddress: "QL14B", city: "Da Nang", state: "Da Nang", zipCode: 55000)
+        } catch let error {
+            fatalError("\(error)")
+        }
+        let aClassic = PassGeneration.generate(kind: .Classic)
+        let aManager = PassGeneration.generate(kind: .Manager(nameDefault, addressDefault, dateOfBith, socialSecurityNumber, managementTier))
+       
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,5 +35,6 @@ class ViewController: UIViewController {
     }
 
 
-}
+
+   }
 

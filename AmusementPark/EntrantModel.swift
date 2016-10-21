@@ -31,7 +31,7 @@ protocol ManagementTierable{
 
 enum FillingError: Error {
     case MissingInformation(required: String)
-    case MissingLastName
+
 }
 struct Name {
     let firstName: String?
@@ -93,7 +93,7 @@ protocol RideAccessible {}
 
 protocol AllRidesAccessible: RideAccessible {}
 
-protocol SkipAllRidesAccessible: RideAccessible {}
+protocol SkipAllRideLinesAccessible: RideAccessible {}
 
 // MARK: DISCOUNT ACCESS PROTOCOL
 
@@ -124,13 +124,19 @@ protocol Manager: Employee,AreaAccessible,ManagementTierable{}
 
 class ClassicGuest: Guest{}
 
-class VipGuest: Guest,SkipAllRidesAccessible,FoodDiscountAccessible,MerchanDiscountAccesible{
+class VipGuest: Guest,SkipAllRideLinesAccessible,FoodDiscountAccessible,MerchanDiscountAccesible{
     var foodDiscount: Int? = 10
     var merchanDiscount: Int? = 20
 }
 
 class FreeChildGuest: Guest,Dateable{
     var dateOfBirth: String?
+    init(dateOfBirth: String?) throws {
+        guard let dateOfBirth = dateOfBirth else {
+            throw FillingError.MissingInformation(required: "Missing Date Of Birth")
+        }
+        self.dateOfBirth = dateOfBirth
+    }
 }
 
 // EMPLOYEE Type 
@@ -156,7 +162,7 @@ class HourlyEmployeeType: EmployeeType {
     var merchanDiscount: Int? = 25
 }
 class ManagerType: EmployeeType,Manager {
-     var managementTier: String?
+    var managementTier: String?
     var foodDiscount: Int? = 25
     var merchanDiscount: Int? = 25
      init(name: Name, address: Address,dateOfBirth: String?, socialSecurityNumber: Int?, managementTier: String?) throws {
@@ -178,7 +184,7 @@ class FoodServicesEmployee: HourlyEmployeeType,KitchenAccessible {}
 class MaintenanceEmployee: HourlyEmployeeType,MaintenanceAccessible,RideControlAccessible,KitchenAccessible {}
 class RideServicesEmployee: HourlyEmployeeType,RideControlAccessible {}
 
-class Mananger: ManagerType {}
+class ManagerEmployee: ManagerType {}
 
 
 
