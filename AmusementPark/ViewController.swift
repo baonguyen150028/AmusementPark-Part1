@@ -26,14 +26,23 @@ class ViewController: UIViewController {
         }
         let aClassic = PassGeneration.generate(kind: .Classic)
         let aManager = PassGeneration.generate(kind: .Manager(nameDefault, addressDefault, dateOfBith, socialSecurityNumber, managementTier))
-       
+        print(swipeForRide(entrant: aClassic))
+        print(swipeForFoodDiscount(entrant: aManager))
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    func swipeForRide(entrant: EntrantType) -> Bool {
+        return Swiper.checkSwipeForRide(entrant: entrant)
+    }
+    func swipeForFoodDiscount(entrant: EntrantType) -> (Bool, Int) {
+        return Swiper.checkSwipeForFoodDiscount(entrant: entrant)
+    }
+    func swipeForMerchanDiscount(entrant: EntrantType) -> (Bool, Int) {
+        return Swiper.checkSwipeForMerchanDiscount(entrant: entrant)
+    }
 
 
    }

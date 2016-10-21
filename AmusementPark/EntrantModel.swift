@@ -113,11 +113,11 @@ protocol EntrantType: AsumementAccessible {}
 
 protocol Guest: EntrantType, AllRidesAccessible {}
 
-protocol Employee: EntrantType, Nameable,Addressable,Dateable,SocialSecurityNumberable,AllRidesAccessible,DiscountAccessible {}
+protocol Employee: EntrantType, Nameable,Addressable,Dateable,SocialSecurityNumberable,AllRidesAccessible {}
 
-protocol HourlyEmployee: Employee {}
+protocol HourlyEmployee: Employee,FoodDiscountAccessible,MerchanDiscountAccesible {}
 
-protocol Manager: Employee,AreaAccessible,ManagementTierable{}
+protocol Manager: Employee,AreaAccessible,ManagementTierable, FoodDiscountAccessible,MerchanDiscountAccesible{}
 
 
 // GUEST Type
@@ -185,20 +185,6 @@ class MaintenanceEmployee: HourlyEmployeeType,MaintenanceAccessible,RideControlA
 class RideServicesEmployee: HourlyEmployeeType,RideControlAccessible {}
 
 class ManagerEmployee: ManagerType {}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

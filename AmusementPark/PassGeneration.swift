@@ -84,6 +84,12 @@ class Swiper {
     //SWIPE METHOD
     static func check(entrant: EntrantType, access: Permission) -> Bool {
 
+        if let birthdayEntrant = entrant as? Dateable, let birthday = birthdayEntrant.dateOfBirth?.toDateTime() {
+            if birthday.isBirthDay() {
+                print("Happy Birthday")
+            }
+        }
+
         var accessGranted: Bool = false
 
         switch access {
@@ -112,10 +118,10 @@ class Swiper {
 
         if accessGranted {
             print("Access to \(access) is granted")
-            playSound(Access.granted.fileUrl)
+            playSound(url: Access.granted.fileUrl)
         } else {
             print("Access to \(access) is denied")
-            playSound(Access.denied.fileUrl)
+            playSound(url: Access.denied.fileUrl)
         }
 
         return accessGranted
@@ -136,7 +142,7 @@ class Swiper {
         return (true, entrantFoodDiscount.foodDiscount!)
     }
 
-    static func checkSwipeForMerchandiseDiscount(entrant: EntrantType) -> (Bool, Int) {
+    static func checkSwipeForMerchanDiscount(entrant: EntrantType) -> (Bool, Int) {
         guard Swiper.check(entrant: entrant, access: .MerchanDiscount) else {
             return (false, 0)
         }
