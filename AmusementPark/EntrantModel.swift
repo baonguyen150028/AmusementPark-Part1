@@ -109,7 +109,8 @@ protocol MerchanDiscountAccesible: DiscountAccessible {
 
 // MARK: ENTRANT TYPE PROTOCOL 
 
-protocol EntrantType: AsumementAccessible {}
+protocol EntrantType: AsumementAccessible {
+}
 
 protocol Guest: EntrantType, AllRidesAccessible {}
 
@@ -186,6 +187,25 @@ class RideServicesEmployee: HourlyEmployeeType,RideControlAccessible {}
 
 class ManagerEmployee: ManagerType {}
 
+protocol SwipeDelegate{
+    func hasRecentlySwiped(lastTimeSwiped: Date?) -> Bool
+}
+class SwipeDelegateType: SwipeDelegate {
+    let timeToWait: Double = 300.0
+    func hasRecentlySwiped(lastTimeSwiped: Date?) -> Bool {
+        let newSwipe = Date()
+        guard let lastTime: Date = lastTimeSwiped else {
+            print("This is you first Ride!")
+            return false
+        }
+        //check if the interval since the last date is < timeToWait
+        if newSwipe.timeIntervalSince(lastTime) < timeToWait {
+            return true
+        } else {
+            return false
+        }
+    }
+}
 
 
 // DATE FORMATER

@@ -8,6 +8,10 @@
 
 import AudioToolbox
 
+
+
+
+
 class PassGeneration {
 
     enum EntrantInfoKind {
@@ -127,12 +131,28 @@ class Swiper {
         return accessGranted
 
     }
-    static func checkSwipeForRide(entrant: EntrantType) -> Bool {
+
+
+
+    static func checkSwipeForRide(entrant: EntrantType, lastTimeSwiped: Date?) -> Bool {
         //Check the privilege
         guard Swiper.check(entrant: entrant, access: .AllRides) else {
             return false
         }
-        return true
+        var delegate: SwipeDelegate?
+        delegate = SwipeDelegateType()
+        
+        guard let a = delegate?.hasRecentlySwiped(lastTimeSwiped: lastTimeSwiped) else {
+            return true
+        }
+        if a {
+            print("PLease wait at least 5 minutes between 2 rides")
+            return false
+        } else {
+            print("Welcome !")
+            return true
+        }
+        
     }
     static func checkSwipeForFoodDiscount(entrant: EntrantType) -> (Bool, Int) {
         guard Swiper.check(entrant: entrant, access: .FoodDiscount) else {
@@ -154,4 +174,6 @@ class Swiper {
         AudioServicesCreateSystemSoundID(url as CFURL, &sound)
         AudioServicesPlaySystemSound(sound)
     }
+    
+
 }
